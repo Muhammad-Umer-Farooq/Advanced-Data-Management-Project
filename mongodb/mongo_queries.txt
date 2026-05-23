@@ -1,0 +1,47 @@
+// Database: mobility_db
+// Collection: trips
+
+
+
+// Query 1: Display trip with user and station info
+
+db.trips.find(
+  {},
+  {
+    trip_id: 1,
+    "user.name": 1,
+    "start_station.name": 1,
+    "end_station.name": 1,
+    _id: 0
+  }
+)
+
+// Query 2: Count total trips per user
+db.trips.aggregate([
+  {
+    $group: {
+      _id: "$user.name",
+      total_trips: { $sum: 1 }
+    }
+  }
+])
+
+// Query 3: Count trips started per station
+db.trips.aggregate([
+  {
+    $group: {
+      _id: "$start_station.name",
+      trips_started: { $sum: 1 }
+    }
+  }
+])
+
+// Query 4: Find trips with ERROR events
+db.trips.find({
+  "events.type": "ERROR"
+})
+
+
+
+
+

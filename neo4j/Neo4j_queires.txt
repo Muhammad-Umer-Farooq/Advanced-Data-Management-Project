@@ -1,0 +1,76 @@
+-- ===============================
+-- CREATE NODES
+-- ===============================
+
+CREATE (u1:User {name: "John", surname: "Doe", birthdate: "1995-05-10", country: "USA"})
+CREATE (u2:User {name: "Maria", surname: "Rossi", birthdate: "1993-08-15", country: "Italy"})
+CREATE (u3:User {name: "Farooq", surname: "Muhammad Umer", birthdate: "2002-10-18", country: "Pakistan"})
+CREATE (u3:User {name: "Qureshi", surname: "Farhan", birthdate: "2000-10-20", country: "Pakistan"})
+
+CREATE (s1:Station {name: "Station A"})
+CREATE (s2:Station {name: "Station B"})
+CREATE (s3:Station {name: "Station C"})
+
+CREATE (t1:Trip {trip_id: 1})
+CREATE (t2:Trip {trip_id: 2})
+CREATE (t3:Trip {trip_id: 3})
+
+-- ===============================
+-- CREATE RELATIONSHIPS
+-- ===============================
+
+MATCH (u:User {name: "John"}), (t:Trip {trip_id: 1})
+CREATE (u)-[:PERFORMED]->(t)
+
+MATCH (u:User {name: "Maria"}), (t:Trip {trip_id: 2})
+CREATE (u)-[:PERFORMED]->(t)
+
+MATCH (u:User {name: "Farooq"}), (t:Trip {trip_id: 3})
+CREATE (u)-[:PERFORMED]->(t)
+
+MATCH (t:Trip {trip_id: 1}), (s:Station {name: "Station A"})
+CREATE (t)-[:STARTS_AT]->(s)
+
+MATCH (t:Trip {trip_id: 1}), (s:Station {name: "Station B"})
+CREATE (t)-[:ENDS_AT]->(s)
+
+MATCH (t:Trip {trip_id: 2}), (s:Station {name: "Station B"})
+CREATE (t)-[:STARTS_AT]->(s)
+
+MATCH (t:Trip {trip_id: 2}), (s:Station {name: "Station C"})
+CREATE (t)-[:ENDS_AT]->(s)
+
+MATCH (t:Trip {trip_id: 3}), (s:Station {name: "Station A"})
+CREATE (t)-[:STARTS_AT]->(s)
+
+MATCH (t:Trip {trip_id: 3}), (s:Station {name: "Station C"})
+CREATE (t)-[:ENDS_AT]->(s)
+
+-- ===============================
+-- QUERY 1: SHOW ALL RELATIONSHIPS
+-- ===============================
+
+MATCH (a)-[r]->(b)
+RETURN a, r, b;
+
+-- ===============================
+-- QUERY 2: USER DETAILS
+-- ===============================
+
+MATCH (u:User)
+RETURN u.name, u.surname, u.birthdate, u.country;
+
+-- ===============================
+-- QUERY 3: REACHABLE STATIONS
+-- ===============================
+
+MATCH (u:User)-[:PERFORMED]->(:Trip)-[:ENDS_AT]->(s:Station)
+RETURN u.name, s.name;
+
+-- ===============================
+-- QUERY 4: MOST IMPORTANT STATIONS
+-- ===============================
+
+MATCH (s:Station)<-[:STARTS_AT|ENDS_AT]-(:Trip)
+RETURN s.name, COUNT(*) AS connections
+ORDER BY connections DESC;
