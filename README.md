@@ -1,9 +1,3 @@
-Here is the clean, perfectly formatted version of your `README.md`.
-
-The main formatting issues in your draft were unclosed code blocks, inconsistent headings, and unformatted script blocks. I fixed the code blocks so GitHub will render them as clean, copy-pasteable snippets, structured your console tables using proper Markdown syntax, and added sleek badges to make the repository look incredibly professional.
-
-You can copy and paste this entire block directly into your `README.md` file:
-
 ```markdown
 # Distributed City Mobility Platform: Advanced Data Management & Analytics
 
