@@ -1,4 +1,3 @@
-```markdown
 # Distributed City Mobility Platform: Advanced Data Management & Analytics
 
 [![Database](https://img.shields.io/badge/Database-MongoDB%20Atlas-green?style=flat-square&logo=mongodb)](https://www.mongodb.com/)
