@@ -125,6 +125,18 @@ collection.update_one(
     {"trip_id": 4},
     {"$set": {"total_cost": 8.0}}
 )
+
+collection.update_one(
+  { "trip_id": 2 },
+  {
+    "$set": {
+      "events": [
+        { "type": "GPS", "value": 1.1 },
+        { "type": "ERROR", "value": 0 }
+      ]
+    }
+  }
+)
 print("\nUpdated!")
 
 # ==============================================================================
